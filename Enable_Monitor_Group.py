@@ -156,26 +156,11 @@ class Monitor_Group():
             error = f'\n\nError : RPC check-Config XML error : {e}'
         print(error)
         return error
-    
-    """ def TEST(self):
-        self.user = 'satestacc'
-        self.passwd = 'ServiceActivation@123'
-        IP_AN1 = '172.29.82.5'
-        
-        PE_list ={
-            'IP_PE_LIST' : ['172.29.82.1','172.29.82.3']
-        }
-        
-        interface_list ={
-            'INTERFACE_LIST' : ['GigabitEthernet0/1/5', 'GigabitEthernet0/1/6']
-        }      
-        
-        self.Create_profile(IP_AN1, PE_list)
-        self.Track_interface(IP_AN1, interface_list) """
 
     def Create_profile(self, ip_node:str, PE_list:str) -> bool:
         node_param = self.get_node_param(ip_node)
         config_template = make_monitor_group_template(PE_list)
+        logging.warning(f'### Attemping to configure these Netconf to node : {ip_node} ###\n')
         logging.warning(config_template)
         #print(config_template)
         result = self.NETCONF_config(node_param, config_template)
@@ -190,6 +175,7 @@ class Monitor_Group():
     def Track_interface(self, ip_node:str, interface_list:str) -> bool:
         node_param = self.get_node_param(ip_node)
         config_template = make_track_interface_template(interface_list)
+        logging.warning(f'### Attemping to configure these Netconf to node : {ip_node} ###\n')
         logging.warning(config_template)
         #print(config_template)
         result = self.NETCONF_config(node_param, config_template)
